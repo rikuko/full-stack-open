@@ -1,5 +1,6 @@
 # full-stack-open
 
+```
 .
 ├── README.md
 └── osa0
@@ -8,3 +9,4 @@
 └── 0_6_uusi_muistiinpano.md
 
 1 directory, 4 files
+```
