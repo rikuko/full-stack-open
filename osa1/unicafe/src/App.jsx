@@ -105,8 +105,6 @@ const App = () => {
       <Button handleClick={handleNeutralClick} text='Neutral' />
       <Button handleClick={handleBadClick} text='Bad' />
 
-
-
       <Statistics good={good} neutral={neutral} bad={bad} />
 
 
