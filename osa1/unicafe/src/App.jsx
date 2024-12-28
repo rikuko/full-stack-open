@@ -32,23 +32,49 @@ const Statistics = ({ good, neutral, bad }) => {
 
   const pos = good * 1
   const neg = bad * -1
+
   const all = good + neutral + bad
+  const average = ((pos + neg) / all).toFixed(1)
+  const positive = (good / all * 100).toFixed(1)
 
   if (all === 0) {
     return (
-      <StatisticLine text='No feedback given' />
+      <Header header={<p>No feedback given</p>} />
 
     )
   }
+
   return (
-    <>
-      <StatisticLine text='Good' value={good} />
-      <StatisticLine text='Neutral' value={neutral} />
-      <StatisticLine text='Bad' value={bad} />
-      <StatisticLine text='All' value={all} />
-      <StatisticLine text='Average' value={(pos + neg) / all} />
-      <StatisticLine text='Positive' value={good / all * 100} operator='%' />
-    </>
+    <table>
+      <th>
+        <Header header={<h2>Statistics</h2>} />
+      </th>
+      <tr>
+        <td><StatisticLine text='Good' /></td>
+        <td><StatisticLine value={good} /></td>
+      </tr>
+      <tr>
+        <td><StatisticLine text='Neutral' /></td>
+        <td><StatisticLine value={neutral} /></td>
+      </tr>
+      <tr>
+        <td><StatisticLine text='Bad' /></td>
+        <td><StatisticLine value={bad} /></td>
+      </tr>
+      <br />
+      <tr>
+        <td><StatisticLine text='All' /></td>
+        <td><StatisticLine value={all} /></td>
+      </tr>
+      <tr>
+        <td><StatisticLine text='Average' /></td>
+        <td><StatisticLine value={average} /></td>
+      </tr>
+      <tr>
+        <td><StatisticLine text='Positive' /></td>
+        <td><StatisticLine value={positive} operator='%' /></td>
+      </tr>
+    </table>
   )
 }
 
@@ -79,7 +105,7 @@ const App = () => {
       <Button handleClick={handleNeutralClick} text='Neutral' />
       <Button handleClick={handleBadClick} text='Bad' />
 
-      <Header header={<h2>Statistics</h2>} />
+
 
       <Statistics good={good} neutral={neutral} bad={bad} />
 
