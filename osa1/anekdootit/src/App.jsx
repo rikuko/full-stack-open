@@ -21,6 +21,21 @@ const Display = ({ text, vote }) => {
   )
 }
 
+const Sorter = ({ votes, anecdotes }) => {
+  console.log('Vote list: ', votes)
+  let mostLiked = Math.max(...votes);
+  console.log(votes.indexOf(mostLiked))
+  let index = votes.indexOf(mostLiked)
+  let anecdote = anecdotes[index]
+
+  return (
+    <>
+      <h3>Anecdote with most votes</h3>
+      {anecdote}
+    </>
+  )
+}
+
 const App = () => {
 
   const anecdotes = [
@@ -52,9 +67,12 @@ const App = () => {
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <Button handleClick={setRandomNbr} text='Show anecdote' />
-      <Button handleClick={setVoteToAnecdote} text='Vote' />
       <Display text={anecdotes[selected]} vote={votes[selected]} />
+      <Button handleClick={setVoteToAnecdote} text='Vote' />
+      <Sorter votes={votes} anecdotes={anecdotes} />
+
     </div>
   )
 }
