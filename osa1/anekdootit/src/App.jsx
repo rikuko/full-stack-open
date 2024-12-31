@@ -2,15 +2,27 @@ import { useState } from 'react'
 
 
 const Button = (props) => {
-  console.log(props)
+  console.log('Button function ', props.handleClick)
   return (
-    <button onClick={props.handleClick}>
-      {props.text}
-    </button>
+    <div>
+      <button onClick={props.handleClick}>
+        {props.text}
+      </button>
+    </div>
+  )
+}
+
+const Display = ({ text, vote }) => {
+  return (
+    <div>
+      <p><strong>{text}</strong></p>
+      <p>This has {vote} votes</p>
+    </div>
   )
 }
 
 const App = () => {
+
   const anecdotes = [
     'If it hurts, do it more often.',
     'Adding manpower to a late software project makes it later!',
@@ -21,17 +33,28 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when dianosing patients.',
     'The only way to go fast, is to go well.'
   ]
-
+  const [votes, setVotes] = useState(Array(8).fill(0))
   const [selected, setSelected] = useState(0)
+  const [anecdote, setAnecdote] = useState('')
+  const [vote, setVote] = useState(0)
+
+  const setRandomNbr = () => {
+    setSelected(Math.floor(Math.random() * 8))
+    setAnecdote(anecdotes[selected])
+  }
+
+  const setVoteToAnecdote = () => {
+    const points = votes
+    points[selected] += 1
+    setVotes(points)
+    setVote(votes[selected])
+  }
 
   return (
     <div>
-      <Button handleClick={() =>
-        setSelected(Math.floor(Math.random() * 10))} text='Show next'
-      />
-      <br />
-      <br />
-      {anecdotes[selected]}
+      <Button handleClick={setRandomNbr} text='Show anecdote' />
+      <Button handleClick={setVoteToAnecdote} text='Vote' />
+      <Display text={anecdotes[selected]} vote={votes[selected]} />
     </div>
   )
 }
