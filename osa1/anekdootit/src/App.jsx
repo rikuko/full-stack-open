@@ -16,7 +16,7 @@ const Display = ({ text, vote }) => {
   return (
     <div>
       <p><strong>{text}</strong></p>
-      <p>This has {vote} votes</p>
+      <p>This anecdote has {vote} votes</p>
     </div>
   )
 }
@@ -31,7 +31,8 @@ const Sorter = ({ votes, anecdotes }) => {
   return (
     <>
       <h3>Anecdote with most votes</h3>
-      {anecdote}
+      <strong>{anecdote}</strong>
+      <p>This anecdote has {mostLiked} votes</p>
     </>
   )
 }
