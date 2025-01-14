@@ -12,21 +12,29 @@ const App = () => {
   ])
 
   const [newContact, setNewContact] = useState('Add new contact')
+  const [names, setNames] = useState([])
 
-  const addContact = (event) => {
+  const addContact = () => {
     event.preventDefault()
-    console.log('Add-button clicked ', event.target)
+    console.log('Add-button clicked ')
     const newObject = {
-      id: String(contacts.length + 1),
+      id: contacts.length + 1,
       name: newContact
     }
-    setContacts(contacts.concat(newObject))
+
+    if (names.includes(newContact)) {
+      return alert(`${newContact} all ready exist`)
+    }
+    else setContacts(contacts.concat(newObject))
     setNewContact('')
+    setNames([])
   }
 
-  const handleContactChange = (event) => {
-    console.log('Text in name input field: ', event.target.value)
+  const handleNewContact = (event) => {
+    console.log('Handle new contact: ', event.target.value)
     setNewContact(event.target.value)
+    setNames(names.concat(contacts.map(contact => contact.name)))
+
   }
 
   return (
@@ -35,7 +43,7 @@ const App = () => {
       <form onSubmit={addContact}>
         <div>
           Name: <input value={newContact}
-            onChange={handleContactChange}
+            onChange={handleNewContact}
           />
           <button type="submit">Add</button>
         </div>
