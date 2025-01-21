@@ -28,18 +28,23 @@ const App = () => {
     event.preventDefault();
     console.log("Add-button clicked ");
     const newObject = {
-      id: contacts.length + 1,
       name: newContact,
       number: newNumber,
     };
 
     if (names.includes(newContact)) {
       return alert(`${newContact} all ready exist`);
-    } else setContacts(contacts.concat(newObject));
-    setNewContact("");
-    setNames([]);
-    setNewNumber("");
-    setFilteredContacts(contacts.concat(newObject));
+    } else
+      axios
+        .post("http://localhost:3001/persons", newObject)
+        .then((response) => {
+          console.log(response);
+          setContacts(contacts.concat(newObject));
+          setNewContact("");
+          setNames([]);
+          setNewNumber("");
+          setFilteredContacts(contacts.concat(newObject));
+        });
   };
 
   // Käsittelee uuden yhteystiedon lisäämisen
