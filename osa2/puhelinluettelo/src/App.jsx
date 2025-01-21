@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import contactService from "./services/contacts";
 
 import Contact from "./components/Contact";
 import ContactForm from "./components/ContactForm";
@@ -15,7 +16,9 @@ const App = () => {
   const [names, setNames] = useState([]);
 
   const hook = () => {
-    axios.get("http://localhost:3001/persons").then((response) => {
+    contactService
+    .getAll()
+    .then((response) => {
       setContacts(response.data);
       setFilteredContacts(response.data);
     });
@@ -35,8 +38,8 @@ const App = () => {
     if (names.includes(newContact)) {
       return alert(`${newContact} all ready exist`);
     } else
-      axios
-        .post("http://localhost:3001/persons", newObject)
+      contactService
+        .create(newObject)
         .then((response) => {
           console.log(response);
           setContacts(contacts.concat(newObject));
