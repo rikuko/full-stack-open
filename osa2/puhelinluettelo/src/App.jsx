@@ -1,12 +1,11 @@
-import { useState, useEffect } from "react"
-import axios from "axios"
-import contactService from "./services/contacts"
+import { useState, useEffect } from 'react'
+import contactService from './services/contacts'
 
-import Contact from "./components/Contact"
-import ContactForm from "./components/ContactForm"
-import ContactSearch from "./components/ContactSearch"
+import Contact from './components/Contact'
+import ContactForm from './components/ContactForm'
+import ContactSearch from './components/ContactSearch'
 
-import "./css/main.css"
+import './css/main.css'
 
 const App = () => {
   const [contacts, setContacts] = useState([])
@@ -16,18 +15,19 @@ const App = () => {
   const [names, setNames] = useState([])
 
   const hook = () => {
-    contactService.getAll().then((response) => {
-      setContacts(response.data)
-      setFilteredContacts(response.data)
-    })
+    contactService
+      .getAll()
+      .then((response) => {
+        setContacts(response.data)
+        setFilteredContacts(response.data)
+      })
   }
-
   useEffect(hook, [])
 
   // Käsittelee uuden yhteystiedon lisäämisen ja tarkistaa onko nimi jo olemassa
   const addContact = (event) => {
     event.preventDefault()
-    console.log("Add-button clicked ")
+    console.log('Add-button clicked ')
     const newObject = {
       name: newContact,
       number: newNumber,
@@ -36,48 +36,50 @@ const App = () => {
     if (names.includes(newContact)) {
       return alert(`${newContact} all ready exist`)
     } else
-      contactService.create(newObject).then((response) => {
-        console.log(response)
-        setContacts(contacts.concat(newObject))
-        setNewContact("")
-        setNames([])
-        setNewNumber("")
-        setFilteredContacts(contacts.concat(newObject))
-      })
+      contactService
+        .create(newObject)
+        .then((response) => {
+          console.log(response)
+          setContacts(contacts.concat(newObject))
+          setNewContact('')
+          setNames([])
+          setNewNumber('')
+          setFilteredContacts(contacts.concat(newObject))
+        })
   }
 
   // Poistaa yhteystiedon id:n perusteella
   const removeContactById = (id) => {
-    console.log("Poistettava kontakti ", id)
+    console.log('Poistettava kontakti ', id)
     const name = contacts.find((contact) => contact.id === id).name
     window.confirm(`Do you want to delete ${name}?`)
-    contactService.remove(id).then((response) => {
-      console.log(response)
-      setContacts(contacts.filter((contact) => contact.id !== id))
-      setFilteredContacts(contacts.filter((contact) => contact.id !== id))
-    })
+    contactService
+      .remove(id)
+      .then((response) => {
+        console.log(response)
+        setContacts(contacts.filter((contact) => contact.id !== id))
+        setFilteredContacts(contacts.filter((contact) => contact.id !== id))
+      })
   }
 
   // Käsittelee uuden yhteystiedon lisäämisen
   const handleNewContact = (event) => {
-    console.log("Handle new contact: ", event.target.value)
+    console.log('Handle new contact: ', event.target.value)
     setNewContact(event.target.value)
     setNames(names.concat(contacts.map((contact) => contact.name)))
   }
 
   // Käsittelee uuden numeron lisäämisen
   const handleNewNumber = (event) => {
-    console.log("Handle new number ", event.target.value)
+    console.log('Handle new number ', event.target.value)
     setNewNumber(event.target.value)
   }
 
   // Käsittelee yhteystietojen hakemisen
   const handleContactSearch = (event) => {
-    console.log("Contact search: ", event.target.value)
+    console.log('Contact search: ', event.target.value)
     setFilteredContacts(
-      contacts.filter((contact) =>
-        contact.name.toLowerCase().includes(event.target.value.toLowerCase())
-      )
+      contacts.filter((contact) => contact.name.toLowerCase().includes(event.target.value.toLowerCase()))
     )
   }
 
