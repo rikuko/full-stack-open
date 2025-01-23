@@ -8,7 +8,7 @@
     {
       "id": "2",
       "content": "Browser can execute only JavaScript",
-      "important": false
+      "important": true
     },
     {
       "id": "3",
@@ -18,11 +18,6 @@
     {
       "id": "eed9",
       "content": "Moikka moi",
-      "important": false
-    },
-    {
-      "id": "fa51",
-      "content": "Joopa joo",
       "important": false
     }
   ]
