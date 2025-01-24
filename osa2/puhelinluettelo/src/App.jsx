@@ -4,6 +4,7 @@ import contactService from './services/contacts'
 import Contact from './components/Contact'
 import ContactForm from './components/ContactForm'
 import ContactSearch from './components/ContactSearch'
+import Message from './components/Message'
 
 import './css/main.css'
 
@@ -13,6 +14,7 @@ const App = () => {
   const [newContact, setNewContact] = useState()
   const [newNumber, setNewNumber] = useState()
   const [names, setNames] = useState([])
+  const [message, setMessage] = useState(null)
 
   const hook = () => {
     contactService
@@ -45,6 +47,10 @@ const App = () => {
           setNames([])
           setNewNumber('')
           setFilteredContacts(contacts.concat(newObject))
+          setMessage(`${newContact} added to the phone book`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 3000)
         })
   }
 
@@ -56,9 +62,10 @@ const App = () => {
     contactService
       .remove(id)
       .then((response) => {
-        console.log(response)
-        setContacts(contacts.filter((contact) => contact.id !== id))
+        console.log('Response: ', response)
+        console.log('Poistettu id: ', id)
         setFilteredContacts(contacts.filter((contact) => contact.id !== id))
+        setContacts(contacts.filter((contact) => contact.id !== id))
       })
   }
 
@@ -91,6 +98,11 @@ const App = () => {
         handleContactSearch={handleContactSearch}
       />
       <h2>Add new contact</h2>
+
+
+      <Message message={message} />
+
+
       <ContactForm
         addContact={addContact}
         newContact={newContact}

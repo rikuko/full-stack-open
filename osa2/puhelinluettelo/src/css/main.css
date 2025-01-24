@@ -1,3 +1,14 @@
 ul {
   list-style: none;
 }
+
+.message {
+  background-color: lightgreen;
+  color: green;
+  border: 1px solid green;
+  border-radius: 5px;
+  width: 15rem;
+  padding: 5px;
+  margin: 5px;
+
+}
