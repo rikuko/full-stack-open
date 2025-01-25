@@ -42,7 +42,7 @@ const App = () => {
         .create(newObject)
         .then((response) => {
           console.log(response)
-          setContacts(contacts.concat(newObject))
+          setContacts(hook)
           setNewContact('')
           setNames([])
           setNewNumber('')
@@ -50,14 +50,14 @@ const App = () => {
           setMessage(`${newContact} added to the phone book`)
           setTimeout(() => {
             setMessage(null)
-          }, 3000)
+          }, 1500)
         })
   }
 
   // Poistaa yhteystiedon id:n perusteella
   const removeContactById = (id) => {
     console.log('Poistettava kontakti ', id)
-    const name = contacts.find((contact) => contact.id === id).name
+    /*  const name = contacts.find((contact) => contact.id === id).name */
     window.confirm(`Do you want to delete ${name}?`)
     contactService
       .remove(id)
