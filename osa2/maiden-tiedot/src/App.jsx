@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useState, useEffect } from "react"
-import Display from "./components/Display"
+import Finder from "./components/Finder"
 
 
 function App() {
@@ -8,7 +8,6 @@ function App() {
   const [countries, setCountries] = useState([])
   const [searchValue, setSearchValue] = useState([])
   const [countriesToShow, setCountriesToShow] = useState([])
-
 
   const hook = () => {
     console.log('Effekti')
@@ -22,6 +21,7 @@ function App() {
   }
   useEffect(hook, [])
   console.log('Render', countries.length, 'countries')
+  console.log('Countries to show ', countriesToShow)
 
   const handelSearch = (event) => {
     console.log('Handle search: ', event.target.value)
@@ -41,7 +41,7 @@ function App() {
           value={searchValue}
           onChange={handelSearch} />
       </form>
-      <Display countriesToShow={countriesToShow} />
+      <Finder countriesToShow={countriesToShow} />
     </div>
   )
 }
