@@ -5,8 +5,6 @@ const Contact = ({ contact, removeContact }) => {
       <li>
         {contact.name}
         {contact.number}
-        <br />
-        {contact.id}
         <button onClick={removeContact}>Delete</button>
       </li>
     </>
