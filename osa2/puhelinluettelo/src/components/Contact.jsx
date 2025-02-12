@@ -3,8 +3,8 @@ const Contact = ({ contact, removeContact }) => {
   return (
     <>
       <li>
-        {contact.name}
-        {contact.number}
+        {contact.name} {' '}
+        {contact.number} {' '}
         <button onClick={removeContact}>Delete</button>
       </li>
     </>
