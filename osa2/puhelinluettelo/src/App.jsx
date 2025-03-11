@@ -57,7 +57,7 @@ const App = () => {
   // Poistaa yhteystiedon id:n perusteella
   const removeContactById = (id) => {
     console.log('Poistettava kontakti ', id)
-    /*  const name = contacts.find((contact) => contact.id === id).name */
+    const name = contacts.find((contact) => contact.id === id).name
     window.confirm(`Do you want to delete ${name}?`)
     contactService
       .remove(id)
