@@ -36,7 +36,20 @@ const App = () => {
     }
 
     if (names.includes(newContact)) {
-      return alert(`${newContact} all ready exist`)
+      return confirm(`${newContact} all ready exist. Do you want change number?`) ? contactService.update(contacts.find((contact) => contact.name === newContact).id, newObject)
+        .then((response) => {
+          console.log(response)
+          setContacts(hook)
+          setNewContact('')
+          setNames([])
+          setNewNumber('')
+          setFilteredContacts(contacts.concat(newObject))
+          setMessage(`${newContact} updated to the phone book`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 1500)
+        })
+        : null
     } else
       contactService
         .create(newObject)
