@@ -7,8 +7,18 @@ ul {
   color: green;
   border: 1px solid green;
   border-radius: 5px;
-  width: 15rem;
+  width: fit-content;
   padding: 5px;
   margin: 5px;
 
+}
+
+.error {
+  background-color: lightgray;
+  color: red;
+  border: 1px solid red;
+  border-radius: 5px;
+  width: fit-content;
+  padding: 5px;
+  margin: 5px;
 }

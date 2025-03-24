@@ -15,6 +15,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState()
   const [names, setNames] = useState([])
   const [message, setMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   const hook = () => {
     contactService
@@ -65,6 +66,12 @@ const App = () => {
             setMessage(null)
           }, 1500)
         })
+        .catch(error => {
+          setErrorMessage(`${error.response.data.error}`)
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 3000)
+        })
   }
 
   // Poistaa yhteystiedon id:n perusteella
@@ -79,6 +86,10 @@ const App = () => {
         console.log('Poistettu id: ', id)
         setFilteredContacts(contacts.filter((contact) => contact.id !== id))
         setContacts(contacts.filter((contact) => contact.id !== id))
+        setErrorMessage(`${name} removed from the phone book`)
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 1500)
       })
   }
 
@@ -113,7 +124,7 @@ const App = () => {
       <h2>Add new contact</h2>
 
 
-      <Message message={message} />
+      <Message message={message} errorMessage={errorMessage} />
 
 
       <ContactForm
