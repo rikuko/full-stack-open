@@ -14,7 +14,8 @@ const blogSchema = mongoose.Schema({
 
 const Blog = mongoose.model('Blog', blogSchema)
 
-const mongoUrl = 
+
+const mongoUrl = process.env.MONGO_URI
 mongoose.connect(mongoUrl)
 
 /* app.use(cors()) */
