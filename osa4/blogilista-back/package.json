@@ -1,0 +1,18 @@
+{
+  "name": "blogilista-back",
+  "version": "0.0.1",
+  "description": "Blogi-muistion back-end",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Riku Koskinen",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.13.0"
+  }
+}
