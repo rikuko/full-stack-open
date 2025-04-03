@@ -8,7 +8,7 @@
     "dev": "node --watch index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test"
   },
   "author": "Riku Koskinen",
   "license": "ISC",
