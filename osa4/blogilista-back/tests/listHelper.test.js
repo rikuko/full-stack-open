@@ -3,7 +3,10 @@ const assert = require('node:assert')
 const listHelper =require('../utils/list_helper')
 
 
+// Empty blog list
 const blogs = []
+
+// Blog list containing only one blog
 const listWithOneBlog = [
   {
     _id: '5a422aa71b54a676234d17f8',
@@ -14,6 +17,8 @@ const listWithOneBlog = [
     __v: 0
   }
 ]
+
+// Blog list with multiple blogs
 const listOfBlogs = [
   {
     _id: '5a422a851b54a676234d17f7',
@@ -66,14 +71,11 @@ const listOfBlogs = [
 ]
 
 test('dummy returns one', () => {
-
-
   const result = listHelper.dummy(blogs)
   assert.strictEqual(result, 1)
 })
 
 describe('total likes', () => {
-
   test('empty list return zero', () => {
     const result = listHelper.totalLikes(blogs)
     assert.strictEqual(result, 0)
@@ -88,4 +90,21 @@ describe('total likes', () => {
     const result = listHelper.totalLikes(listOfBlogs)
     assert.strictEqual(result, 36)
   }
+})
+
+describe('most liked blog', () => {
+  test('Empty list return 0', () => {
+    const result = listHelper.favoriteBlog(blogs)
+    assert.strictEqual(result, 0)
+  })
+
+  test('Only one blog in list', () => {
+    const result = listHelper.totalLikes(listWithOneBlog)
+    assert.strictEqual(result, 5)
+  })
+
+  test('Testing most liked blog', () => {
+    const result = listHelper.favoriteBlog(listOfBlogs)
+    assert.deepStrictEqual(result, listOfBlogs[2])
+  })
 })
