@@ -103,7 +103,7 @@ describe('most liked blog', () => {
     assert.strictEqual(result, 5)
   })
 
-  test('Testing most liked blog', () => {
+  test('Finding most liked blog', () => {
     const result = listHelper.favoriteBlog(listOfBlogs)
     assert.deepStrictEqual(result, listOfBlogs[2])
   })
