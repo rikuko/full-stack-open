@@ -1,10 +1,17 @@
-const { test, after, describe } = require('node:test')
+const { test, after, describe, beforeEach } = require('node:test')
 const assert = require('node:assert')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
-
 const api = supertest(app)
+const testData = require('./test_data')
+const Blog = require('../models/blog')
+
+
+beforeEach(async () => {
+  await Blog.deleteMany({})
+  await Blog.insertMany(testData.blogs)
+})
 
 describe('GET-method API tests', () => {
 
@@ -14,20 +21,20 @@ describe('GET-method API tests', () => {
       .expect('Content-Type', /application\/json/)
   })
 
-  test('Two blogs in list', async () => {
+  test('Four blogs in list', async () => {
     const response = await api.get('/api/blogs')
     console.log('Blogs in DB: ',response.body)
-    assert.strictEqual(response.body.length, 2)
-  })
-
-  test('Not one blog in list', async () => {
-    const response = await api.get('/api/blogs')
-    assert.notEqual(response.body.length, 1)
+    assert.strictEqual(response.body.length, 4)
   })
 
   test('Not three blog in list', async () => {
     const response = await api.get('/api/blogs')
     assert.notEqual(response.body.length, 3)
+  })
+
+  test('Not 5 blog in list', async () => {
+    const response = await api.get('/api/blogs')
+    assert.notEqual(response.body.length, 5)
   })
 
   test('returned object id-field is named id', async () => {
@@ -36,8 +43,8 @@ describe('GET-method API tests', () => {
     assert.ok('id' in response.body[0])
     assert.ok(!('_id' in response.body[0]))
   })
+})
 
-  after(async () => {
-    await mongoose.connection.close()
-  })
+after(async () => {
+  await mongoose.connection.close()
 })
