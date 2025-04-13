@@ -13,6 +13,7 @@ beforeEach(async () => {
   await Blog.insertMany(testData.blogs)
 })
 
+//Tests for GET-method API
 describe('GET-method API tests', () => {
 
   test('all blogs are returned as JSON', async () => {
@@ -39,7 +40,7 @@ describe('GET-method API tests', () => {
 
   test('returned object id-field is named id', async () => {
     const response = await api.get('/api/blogs')
-    console.log('Response: ',response.body)
+    console.log('Response: ',response.body[0])
     assert.ok('id' in response.body[0])
     assert.ok(!('_id' in response.body[0]))
   })

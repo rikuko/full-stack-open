@@ -1,7 +1,6 @@
 
 const blogs = [
   {
-    _id: '5a422a851b54a676234d17f7',
     title: 'React patterns',
     author: 'Michael Chan',
     url: 'https://reactpatterns.com/',
@@ -24,9 +23,7 @@ const blogs = [
     author: 'Robert C. Martin',
     url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
     likes: 10
-  },
-
-
+  }
 ]
 
 const newBlog = {
