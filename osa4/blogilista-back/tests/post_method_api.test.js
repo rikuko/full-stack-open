@@ -35,11 +35,27 @@ describe('POST-method API tests', () => {
   })
 
 
-  test.only('POST new blog without likes', async () => {
+  test('POST new blog without likes', async () => {
     await api
       .post('/api/blogs')
       .send(testData.blogWithoutLikes)
       .expect(200)
+      .expect('Content-Type', /application\/json/)
+  })
+
+  test('POST new blog without title', async () => {
+    await api
+      .post('/api/blogs')
+      .send(testData.blogWithoutTitle)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+  })
+
+  test('POST new blog without URL', async () => {
+    await api
+      .post('/api/blogs')
+      .send(testData.blogWithoutUrl)
+      .expect(400)
       .expect('Content-Type', /application\/json/)
   })
 })

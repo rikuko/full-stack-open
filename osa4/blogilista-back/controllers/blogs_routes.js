@@ -19,12 +19,23 @@ blogsRouter.post('/', (request, response, next) => {
     url: body.url,
     likes: body.likes || 0
   })
-  blog
-    .save()
-    .then(result => {
-      response.json(result)
+  if (!body.title) {
+    return response.status(400).json({
+      error: 'Title is required'
     })
-    .catch(error => next(error))
+  }
+  if (!body.url) {
+    return response.status(400).json({
+      error: 'URL is required'
+    })
+  } else{
+    blog
+      .save()
+      .then(result => {
+        response.json(result)
+      })
+      .catch(error => next(error))
+  }
 })
 
 module.exports = blogsRouter

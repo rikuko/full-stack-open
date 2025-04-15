@@ -39,6 +39,16 @@ const blogWithoutLikes =  {
   url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html'
 }
 
+const blogWithoutTitle = {
+  author: 'Robert C. Martin',
+  url: 'http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html'
+}
+
+const blogWithoutUrl = {
+  title: 'TDD harms architecture',
+  author: 'Robert C. Martin'
+}
+
 module.exports = {
-  blogs, newBlog, blogWithoutLikes
+  blogs, newBlog, blogWithoutLikes, blogWithoutTitle, blogWithoutUrl
 }

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+/* const mongoose = require('mongoose')
 
 if (process.argv.length < 3) {
   console.log('give password as argument')
@@ -42,4 +42,4 @@ Blog.find({}).then(result => {
     console.log(note)
   })
   mongoose.connection.close()
-})
+}) */
