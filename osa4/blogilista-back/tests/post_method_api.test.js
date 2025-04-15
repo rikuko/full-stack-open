@@ -6,7 +6,7 @@ const app = require('../app')
 const api = supertest(app)
 const testData = require('./test_data')
 
-
+// Tests for POST-method API
 describe('POST-method API tests', () => {
   console.log('Blog-list size in DB ',testData.blogs.length)
 
@@ -33,10 +33,17 @@ describe('POST-method API tests', () => {
     assert.ok('likes' in response.body[4])
     assert.ok('url' in response.body[4])
   })
+
+
+  test.only('POST new blog without likes', async () => {
+    await api
+      .post('/api/blogs')
+      .send(testData.blogWithoutLikes)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  })
 })
 
 after(async () => {
   await mongoose.connection.close()
 })
-
-
