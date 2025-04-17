@@ -1,7 +1,7 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 
-
+// GET all blogs
 blogsRouter.get('/', (request, response) => {
   Blog
     .find({})
@@ -10,6 +10,7 @@ blogsRouter.get('/', (request, response) => {
     })
 })
 
+// POST new blog
 blogsRouter.post('/', (request, response, next) => {
   const body = request.body
 
@@ -28,7 +29,7 @@ blogsRouter.post('/', (request, response, next) => {
     return response.status(400).json({
       error: 'URL is required'
     })
-  } else{
+  } else {
     blog
       .save()
       .then(result => {
@@ -36,6 +37,21 @@ blogsRouter.post('/', (request, response, next) => {
       })
       .catch(error => next(error))
   }
+})
+
+// DELETE blog by ID
+blogsRouter.delete('/:id', (request, response, next) => {
+  const id = request.params.id
+  Blog
+    .findByIdAndDelete(id)
+    .then(result => {
+      if (result) {
+        response.status(204).end()
+      } else {
+        response.status(404).json({ error: 'Blog not found' })
+      }
+    })
+    .catch(error => next(error))
 })
 
 module.exports = blogsRouter

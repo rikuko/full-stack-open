@@ -23,7 +23,7 @@ const blogs = [
     author: 'Robert C. Martin',
     url: 'http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll',
     likes: 10
-  }
+  },
 ]
 
 const newBlog = {
