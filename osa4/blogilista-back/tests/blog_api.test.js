@@ -101,7 +101,7 @@ describe('POST-method API tests', () => {
 
 // Tests for DELETE-method API
 describe('DELETE-method API tests', () => {
-  test.only('delete blog by id', async () => {
+  test('delete blog by id', async () => {
 
     const blogsInDb = await api.get('/api/blogs')
     console.log('Blogs in DB before deleting one: ', blogsInDb.body.length)
@@ -120,7 +120,36 @@ describe('DELETE-method API tests', () => {
   })
 })
 
+// Tests for PUT-method API
+describe('PUT-method tests', () => {
+  test('update blog likes', async () => {
 
+    const blogsInDb = await api.get('/api/blogs')
+    console.log('Blogs in DB before updating one: ', blogsInDb.body.length)
+
+    const blogToUpdate = blogsInDb.body[0]
+    console.log('Blog to be updated: ', blogToUpdate)
+
+    const updatedBlog = {
+      ...blogToUpdate,
+      likes: blogToUpdate.likes + 1
+    }
+
+    await api
+      .put('/api/blogs/' + blogToUpdate.id)
+      .send(updatedBlog)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    const blogsAfterUpdate = await api.get('/api/blogs')
+    console.log('Blogs after update: ', blogsAfterUpdate.body)
+
+    assert.strictEqual(blogsAfterUpdate.body.length, blogsInDb.body.length)
+    assert.strictEqual(blogsAfterUpdate.body[0].likes, blogToUpdate.likes + 1)
+  })
+})
+
+// Close DB connection
 after(async () => {
   await mongoose.connection.close()
   console.log('Connection to DB closed')
