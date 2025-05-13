@@ -50,9 +50,33 @@ const blogWithoutUrl = {
 }
 
 const newUser = {
-    username: 'rkos',
-    name: 'Riku Koskinen',
+    username: 'tero',
+    name: 'Tero Testaaja',
     password: 'salainen'
+}
+
+const userWithoutPassword = {
+    username: 'maija',
+    name: 'Maija Maadoittaja'
+}
+const userWithoutUsername = {
+    name: 'Tero Testaaja',
+    password: 'salainen'
+}
+const userWithShortPassword = {
+    username: 'tero',
+    name: 'Tero Testaaja',
+    password: 'sa'
+}
+const userWithShortUsername = {
+    username: 'te',
+    name: 'Tero Testaaja',
+    password: 'salainen'
+}
+const userWithExistingUsername = {
+    username: 'system',
+    name: 'System User',
+    passwordHash: 'salainen'
 }
 
 module.exports = {
@@ -61,5 +85,10 @@ module.exports = {
     blogWithoutLikes,
     blogWithoutTitle,
     blogWithoutUrl,
-    newUser
+    newUser,
+    userWithoutPassword,
+    userWithoutUsername,
+    userWithShortPassword,
+    userWithShortUsername,
+    userWithExistingUsername
 }

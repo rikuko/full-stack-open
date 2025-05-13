@@ -2,21 +2,57 @@ const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const User = require('../models/user')
 
+// POST new user
 usersRouter.post('/', async (request, response) => {
     const { username, name, password } = request.body
 
-    const salt = 10
-    const passwordHash = await bcrypt.hash(password, salt)
+    console.log('Request body: ', request.body)
 
-    const user = new User({
-        username,
-        name,
-        passwordHash
-    })
+    const usersInDb = await User.find({})
+    const existingUser = usersInDb.map(user => user.username)
+    console.log('User in db ', usersInDb)
+    console.log('Existing user: ', existingUser)
 
-    const savedUser = await user.save()
+    if (existingUser.includes(username)) {
+        return response.status(400).json({
+            error: 'Username already exists'
+        })
+    }
+    if (!password || !username) {
+        return response.status(400).json({
+            error: 'Username and password are required'
+        })
+    }
+    if (password.length < 3) {
+        return response.status(400).json({
+            error: 'Password must be at least 3 characters long'
+        })
+    }
+    if (username.length < 3) {
+        return response.status(400).json({
+            error: 'Username must be at least 3 characters long'
+        })
+    } else {
+        const salt = 10
+        const passwordHash = await bcrypt.hash(password, salt)
 
-    response.status(201).json(savedUser)
+        const user = new User({
+            username,
+            name,
+            passwordHash
+        })
+        await user.save()
+
+        response.status(201).json(user)
+    }
+})
+
+//GET all users
+usersRouter.get('/', async (request, response) => {
+    const users = await User
+        .find({})
+
+    response.json(users)
 })
 
 module.exports = usersRouter

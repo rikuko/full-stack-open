@@ -2,12 +2,10 @@ const { test, after, describe, beforeEach } = require('node:test')
 const assert = require('node:assert')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
-const bcrypt = require('bcrypt')
 const app = require('../app')
 const api = supertest(app)
 const testData = require('./test_data')
 const Blog = require('../models/blog')
-const User = require('../models/user')
 
 
 beforeEach(async () => {
@@ -151,36 +149,6 @@ describe('PUT-method tests', () => {
     })
 })
 
-// Tests for user creation
-describe('tests for user', () => {
-    beforeEach(async () => {
-        await User.deleteMany({})
-
-        const passwordHash = await bcrypt.hash('salainen', 10)
-        const user = new User({ username: 'system', passwordHash })
-
-        await user.save()
-    })
-
-    test('create new user', async () => {
-        const usersAtStart = await User.find({})
-        console.log('Users at start ', usersAtStart)
-
-        await api
-            .post('/api/users')
-            .send(testData.newUser)
-            .expect(201)
-            .expect('Content-Type', /application\/json/)
-
-        const usersAtEnd = await User.find({})
-        console.log('DB content after post one more: ', usersAtEnd)
-
-        assert.strictEqual(usersAtEnd.length, usersAtStart.length + 1)
-
-        const usernames = usersAtEnd.map(u => u.username)
-        assert(usernames.includes(testData.newUser.username))
-    })
-})
 
 // Close DB connection
 after(async () => {
