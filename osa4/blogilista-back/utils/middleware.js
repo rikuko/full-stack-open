@@ -7,6 +7,8 @@ const errorHandler = (error, request, response, next) => {
         return response.status(400).send({ error: 'Invalid id format' })
     } else if (error.name === 'ValidationError') {
         return response.status(400).json({ error: error.message })
+    } else if (error.name === 'JsonWebTokenError') {
+        return response.status(400).json({ error: 'token missing or invalid' })
     }
 
     next(error)
