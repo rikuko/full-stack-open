@@ -13,11 +13,7 @@ usersRouter.post('/', async (request, response) => {
     console.log('User in db ', usersInDb)
     console.log('Existing user: ', existingUser)
 
-    if (existingUser.includes(username)) {
-        return response.status(400).json({
-            error: 'Username already exists'
-        })
-    }
+
     if (!password || !username) {
         return response.status(400).json({
             error: 'Username and password are required'

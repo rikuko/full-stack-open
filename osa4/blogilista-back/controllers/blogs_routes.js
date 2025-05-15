@@ -6,11 +6,6 @@ const jwt = require('jsonwebtoken')
 
 // GET all blogs
 blogsRouter.get('/', async (request, response) => {
-    /*  Blog
-         .find({})
-         .then(blogs => {
-             response.json(blogs)
-         }) */
     const blogs = await Blog
         .find({})
         .populate('user', { username: 1, name: 1 })
@@ -18,26 +13,15 @@ blogsRouter.get('/', async (request, response) => {
     response.json(blogs)
 })
 
-// Token for posting blogs
-const getTokenFrom = request => {
-    const authorization = request.get('authorization')
-    if (authorization && authorization.startsWith('Bearer ')) {
-        return authorization.replace('Bearer ', '')
-    }
-    return null
-}
-
-
-
+//TODOtehtävä 4.20* ei ole vielä valmis. Token ei siirry oikein auth.headeriin
 // POST new blog
 blogsRouter.post('/', async (request, response) => {
     const body = request.body
 
-    const decodedToken = jwt.verify(getTokenFrom(request), process.env.SECRET)
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+    console.log('Decoded token: ', decodedToken)
     if (!decodedToken.id) {
-        return response.status(401).json({
-            error: 'Token missing or invalid'
-        })
+        return response.status(401).json({ error: 'Token is invalid' })
     }
     const user = await User.findById(decodedToken.id)
 
@@ -64,12 +48,7 @@ blogsRouter.post('/', async (request, response) => {
             error: 'URL is required'
         })
     } else {
-        /* blog
-            .save()
-            .then(result => {
-                response.json(result)
-            })
-            .catch(error => next(error)) */
+
         const newBlog = await blog.save()
         user.blogs = user.blogs.concat(newBlog._id)
         await user.save()

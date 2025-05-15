@@ -1,3 +1,4 @@
+require('express-async-errors')
 const config = require('./utils/config')
 const express = require('express')
 const mongoose = require('mongoose')
@@ -25,6 +26,7 @@ mongoose.connect(config.MONGO_URI)
 app.use(express.json())
 app.use(express.static('dist'))
 app.use(middleware.requestLogger)
+app.use(middleware.tokenExtractor)
 
 
 // Routes
