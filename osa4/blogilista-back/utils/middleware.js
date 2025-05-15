@@ -11,8 +11,11 @@ const errorHandler = (error, request, response, next) => {
         return response.status(400).json({ error: 'Username must be unique' })
     } else if (error.name === 'JsonWebTokenError') {
         return response.status(400).json({ error: 'Token missing or invalid' })
+    } else if (error.name === 'TokenExpiredError') {
+        return response.status(401).json({ error: 'Token expired. Please login.' })
+    } else if (error.name === 'TypeError') {
+        return response.status(400).json({ error: 'Invalid request' })
     }
-
     next(error)
 }
 const unknownEndpoint = (request, response) => {
@@ -28,11 +31,6 @@ const requestLogger = (request, response, next) => {
 
 // Token for posting blogs
 const tokenExtractor = (request, response, next) => {
-    /* const authorization = request.get('authorization')
-    if (authorization && authorization.startsWith('Bearer ')) {
-        return authorization.replace('Bearer ', '')
-    }
-    next() */
     const authorization = request.get('authorization')
     if (authorization && authorization.startsWith('Bearer ')) {
         request.token = authorization.replace('Bearer ', '')

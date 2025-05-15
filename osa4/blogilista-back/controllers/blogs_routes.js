@@ -13,7 +13,6 @@ blogsRouter.get('/', async (request, response) => {
     response.json(blogs)
 })
 
-//TODOtehtävä 4.20* ei ole vielä valmis. Token ei siirry oikein auth.headeriin
 // POST new blog
 blogsRouter.post('/', async (request, response) => {
     const body = request.body
@@ -57,18 +56,37 @@ blogsRouter.post('/', async (request, response) => {
 })
 
 // DELETE blog by ID
-blogsRouter.delete('/:id', (request, response, next) => {
+blogsRouter.delete('/:id', async (request, response, next) => {
     const id = request.params.id
-    Blog
-        .findByIdAndDelete(id)
-        .then(result => {
-            if (result) {
-                response.status(204).end()
-            } else {
-                response.status(404).json({ error: 'Blog not found' })
-            }
+    console.log('Request param id ', id)
+
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+    console.log('Decoded token: ', decodedToken)
+    if (!decodedToken.id) {
+        return response.status(401).json({ error: 'Token is invalid' })
+    }
+    const blog = await Blog.findById(id)
+    console.log('Blog: ', blog)
+    /* if (!user) {
+        return response.status(400).json({
+            error: 'User not found'
         })
-        .catch(error => next(error))
+    } */
+
+    if (blog.user.toString() !== decodedToken.id.toString()) {
+        return response.status(401).json({ error: 'Unauthorized to delete this blog' })
+    } else {
+        Blog
+            .findByIdAndDelete(id)
+            .then(result => {
+                if (result) {
+                    response.status(204).end()
+                } else {
+                    response.status(404).json({ error: 'Blog not found' })
+                }
+            })
+            .catch(error => next(error))
+    }
 })
 
 // UPDATE blog by ID
