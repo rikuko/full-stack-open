@@ -9,12 +9,12 @@ const errorHandler = (error, request, response, next) => {
         return response.status(400).json({ error: error.message })
     } else if (error.name === 'MongoServerError' && error.message.includes('E11000 duplicate key error')) {
         return response.status(400).json({ error: 'Username must be unique' })
-    } else if (error.name === 'JsonWebTokenError') {
-        return response.status(400).json({ error: 'Token missing or invalid' })
-    } else if (error.name === 'TokenExpiredError') {
-        return response.status(401).json({ error: 'Token expired. Please login.' })
     } else if (error.name === 'TypeError') {
         return response.status(400).json({ error: 'Invalid request' })
+    } else if (error.name === 'JsonWebTokenError') {
+        return response.status(401).json({ error: 'Token missing or invalid' })
+    } else if (error.name === 'TokenExpiredError') {
+        return response.status(401).json({ error: 'Token expired. Please login.' })
     }
     next(error)
 }
@@ -39,6 +39,7 @@ const tokenExtractor = (request, response, next) => {
     }
     next()
 }
+
 
 module.exports = {
     errorHandler,

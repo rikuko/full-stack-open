@@ -8,25 +8,25 @@ const api = supertest(app)
 const testData = require('./test_data')
 const User = require('../models/user')
 
+// Testikomennot:
+// npm run test -- --test-concurrency=1 => testaa kaikki testit
+// npm run test -- --test-only => testaa yksittäisen test.only-testin
+
 beforeEach(async () => {
     await User.deleteMany({})
-    //await User.insertMany(testData.newUsers)
+
+    const passwordHash = await bcrypt.hash('salainen', 10)
+    const user = new User({
+        username: 'system',
+        name: 'System Admin',
+        passwordHash
+    })
+
+    await user.save()
 })
 
 // Tests for user creation
 describe('tests for user', () => {
-    beforeEach(async () => {
-        await User.deleteMany({})
-
-        const passwordHash = await bcrypt.hash('salainen', 10)
-        const user = new User({
-            username: 'system',
-            name: 'System Admin',
-            passwordHash
-        })
-
-        await user.save()
-    })
 
     test('create new user', async () => {
         const usersAtStart = await User.find({})
@@ -61,7 +61,6 @@ describe('tests for user', () => {
         const usersAtEnd = await User.find({})
         assert.strictEqual(usersAtEnd.length, usersAtStart.length)
     })
-
 
     test('Create user without username', async () => {
         const usersAtStart = await User.find({})
@@ -101,7 +100,7 @@ describe('tests for user', () => {
             .send(testData.userWithShortUsername)
             .expect(400)
             .expect('Content-Type', /application\/json/)
-
+        console.log('Result error: ', result.body.error)
         assert.strictEqual(result.body.error, 'Username must be at least 3 characters long')
 
         const usersAtEnd = await User.find({})
@@ -111,6 +110,7 @@ describe('tests for user', () => {
     test('Create user with existing username', async () => {
         const usersAtStart = await User.find({})
         console.log('Users at start: ', usersAtStart)
+        console.log('Test data: ', testData.userWithExistingUsername)
 
         const result = await api
             .post('/api/users')
@@ -118,7 +118,11 @@ describe('tests for user', () => {
             .expect(400)
             .expect('Content-Type', /application\/json/)
 
-        assert.strictEqual(result.body.error, 'Username already exists')
+        console.log('Result error: ', result.error)
+        console.log('Http-status: ', result.statusCode)
+
+        assert.strictEqual(result.body.error.includes, 'Username must be unique')
+
 
         const usersAtEnd = await User.find({})
         console.log('Users at end: ', usersAtEnd)

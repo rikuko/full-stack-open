@@ -35,13 +35,14 @@ usersRouter.post('/', async (request, response) => {
         const user = new User({
             username,
             name,
-            passwordHash
+            passwordHash,
         })
-        await user.save()
+        const savedUser = await user.save()
 
-        response.status(201).json(user)
+        response.status(201).json(savedUser)
     }
 })
+
 
 //GET all users
 usersRouter.get('/', async (request, response) => {

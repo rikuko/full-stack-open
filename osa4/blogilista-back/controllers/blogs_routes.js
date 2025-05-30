@@ -19,24 +19,10 @@ blogsRouter.post('/', async (request, response) => {
 
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
     console.log('Decoded token: ', decodedToken)
-    if (!decodedToken.id) {
-        return response.status(401).json({ error: 'Token is invalid' })
-    }
+
     const user = await User.findById(decodedToken.id)
+    console.log('User: ', user)
 
-    if (!user) {
-        return response.status(400).json({
-            error: 'User not found'
-        })
-    }
-
-    const blog = new Blog({
-        title: body.title,
-        author: body.author,
-        url: body.url,
-        likes: body.likes || 0,
-        user: user._id
-    })
     if (!body.title) {
         return response.status(400).json({
             error: 'Title is required'
@@ -46,7 +32,24 @@ blogsRouter.post('/', async (request, response) => {
         return response.status(400).json({
             error: 'URL is required'
         })
+    }
+    if (!decodedToken.id) {
+        return response.status(401).json({
+            error: 'Token is invalid'
+        })
+    }
+    if (!user) {
+        return response.status(401).json({
+            error: 'User not found'
+        })
     } else {
+        const blog = new Blog({
+            title: body.title,
+            author: body.author,
+            url: body.url,
+            likes: body.likes || 0,
+            user: user._id
+        })
 
         const newBlog = await blog.save()
         user.blogs = user.blogs.concat(newBlog._id)
@@ -67,11 +70,6 @@ blogsRouter.delete('/:id', async (request, response, next) => {
     }
     const blog = await Blog.findById(id)
     console.log('Blog: ', blog)
-    /* if (!user) {
-        return response.status(400).json({
-            error: 'User not found'
-        })
-    } */
 
     if (blog.user.toString() !== decodedToken.id.toString()) {
         return response.status(401).json({ error: 'Unauthorized to delete this blog' })
@@ -86,6 +84,7 @@ blogsRouter.delete('/:id', async (request, response, next) => {
                 }
             })
             .catch(error => next(error))
+
     }
 })
 
