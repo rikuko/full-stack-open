@@ -6,9 +6,14 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [newBlog, setNewBlog] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
+
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -25,6 +30,24 @@ const App = () => {
       blogService.setToken(user.token)
     }
   }, [])
+
+  const addNewBlog = event => {
+    event.preventDefault()
+    const newBlog = {
+      title: title,
+      author: author,
+      url: url,
+      user: user
+    }
+
+    blogService.create(newBlog).then(returned => {
+      setBlogs(blogs.concat(returned))
+      setNewBlog('')
+      setTitle('')
+      setAuthor('')
+      setUrl('')
+    })
+  }
 
   const handleLogout = () => {
     window.localStorage.clear()
@@ -91,6 +114,53 @@ const App = () => {
         <Button click={handleLogout} text='Logout' />
         <p></p>
       </div>
+
+
+      <div>
+        <h3>Create new entry</h3>
+        <form>
+          <div>
+            <label>
+              Title:
+              <input
+                type='text'
+                value={title}
+                onChange={({ target }) =>
+                  setTitle(target.value)}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Author:
+              <input
+                type='text'
+                value={author}
+                onChange={({ target }) =>
+                  setAuthor(target.value)}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Url:
+              <input
+                type='text'
+                value={url}
+                onChange={({ target }) =>
+                  setUrl(target.value)}
+              />
+            </label>
+          </div>
+          <p></p>
+          <Button click={addNewBlog} text='Save' />
+          <p></p>
+        </form>
+      </div>
+
+
+
+
       {
         blogs.map(blog =>
           <Blog key={blog.id} blog={blog} />
