@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import Button from './components/Button'
+import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
+
+import './css/main.css'
+
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -13,6 +17,8 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+  const [message, setMessage] = useState('')
 
 
   useEffect(() => {
@@ -46,7 +52,19 @@ const App = () => {
       setTitle('')
       setAuthor('')
       setUrl('')
+      setMessage('New blog saved')
+      setTimeout(() => {
+        setMessage(null)
+      }, 3000)
     })
+      .catch(error => {
+        setErrorMessage(
+          `${error.response.data.error}`
+        )
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 3000)
+      })
   }
 
   const handleLogout = () => {
@@ -67,8 +85,18 @@ const App = () => {
       setUsername('')
       setPassword('')
       console.log('Logging credentials: ', username, password)
+      setMessage(`Login successful as ${user.name}`)
+      setTimeout(() => {
+        setMessage(null)
+      }, 3000)
     } catch {
-      console.log('Wrong credentials: ', username, password)
+      console.log('Wrong credentials')
+      setUsername('')
+      setPassword('')
+      setErrorMessage('Wrong username and/or password')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 3000)
     }
   }
 
@@ -76,6 +104,7 @@ const App = () => {
     return (
       <div>
         <h2>Login</h2>
+        <Notification message={message} errorMessage={errorMessage} />
         <form>
           <div>
             <label>
@@ -108,13 +137,13 @@ const App = () => {
   return (
     <div>
       <h2>Blogs</h2>
+      <Notification message={message} errorMessage={errorMessage} />
       <h4>
         Your are logged in as {user.name}</h4>
       <div>
         <Button click={handleLogout} text='Logout' />
         <p></p>
       </div>
-
 
       <div>
         <h3>Create new entry</h3>
@@ -157,9 +186,6 @@ const App = () => {
           <p></p>
         </form>
       </div>
-
-
-
 
       {
         blogs.map(blog =>
