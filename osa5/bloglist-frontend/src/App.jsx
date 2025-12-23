@@ -52,10 +52,10 @@ const App = () => {
       setTitle('')
       setAuthor('')
       setUrl('')
-      setMessage('New blog saved')
+      setMessage(`New blog, ${newBlog.title} by ${newBlog.author} saved`)
       setTimeout(() => {
         setMessage(null)
-      }, 3000)
+      }, 6000)
     })
       .catch(error => {
         setErrorMessage(
