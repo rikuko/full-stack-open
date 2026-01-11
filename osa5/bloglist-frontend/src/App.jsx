@@ -3,6 +3,8 @@ import Blog from './components/Blog'
 import Button from './components/Button'
 import Login from './components/Login'
 import Notification from './components/Notification'
+import BlogForm from './components/BlogForm'
+
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -127,6 +129,22 @@ const App = () => {
     )
   }
 
+  const blogForm = () => {
+    return (
+      <div>
+        <BlogForm
+          title={title}
+          author={author}
+          url={url}
+          handleTitle={({ target }) => setTitle(target.value)}
+          handleAuthor={({ target }) => setAuthor(target.value)}
+          handleUrl={({ target }) => setUrl(target.value)}
+          handleSubmit={addNewBlog}
+        />
+      </div>
+    )
+  }
+
   /*
     if (user === null) {
       return (
@@ -175,12 +193,14 @@ const App = () => {
         <div>
           <h4>
             Your are logged in as {user.name}</h4>
+            {blogForm}
           <div>
 
             <Button click={handleLogout} text='Logout' />
             <p></p>
           </div>
 
+          {/*
           <div>
             <h3>Create new entry</h3>
             <form>
@@ -222,6 +242,7 @@ const App = () => {
               <p></p>
             </form>
           </div>
+*/}
 
           {
             blogs.map(blog =>
