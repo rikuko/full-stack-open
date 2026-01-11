@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import Button from './components/Button'
+import Login from './components/Login'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
 import './css/main.css'
-
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -19,6 +19,7 @@ const App = () => {
   const [url, setUrl] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [message, setMessage] = useState('')
+  const [loginVisible, setLoginVisible] = useState(false)
 
 
   useEffect(() => {
@@ -70,6 +71,7 @@ const App = () => {
   const handleLogout = () => {
     window.localStorage.clear()
     setUser(null)
+    setLoginVisible(false)
   }
 
   const handleLogin = async event => {
@@ -100,98 +102,134 @@ const App = () => {
     }
   }
 
-  if (user === null) {
+  const loginForm = () => {
+    const hideLoginForm = { display: loginVisible ? 'none' : '' }
+    const showLoginForm = { display: loginVisible ? '' : 'none' }
+
     return (
       <div>
-        <h2>Login</h2>
-        <Notification message={message} errorMessage={errorMessage} />
-        <form>
-          <div>
-            <label>
-              Username
-              <input
-                type='text'
-                value={username}
-                onChange={({ target }) =>
-                  setUsername(target.value)}
-              />
-            </label>
+        <div style={hideLoginForm}>
+          <button onClick={() => setLoginVisible(true)}>Login</button>
+        </div>
+        <div>
+          <div style={showLoginForm}>
+            <Login
+              username={username}
+              password={password}
+              handleUsername={({ target }) => setUsername(target.value)}
+              handlePassword={({ target }) => setPassword(target.value)}
+              handleSubmit={handleLogin}
+            />
+            <button onClick={() => setLoginVisible(false)}>Cancel</button>
           </div>
-          <div>
-            <label>
-              Password
-              <input
-                type='password'
-                value={password}
-                onChange={({ target }) =>
-                  setPassword(target.value)}
-              />
-            </label>
-          </div>
-          <Button click={handleLogin} text='Login' />
-        </form>
+        </div>
       </div>
     )
   }
+
+  /*
+    if (user === null) {
+      return (
+        
+              <div>
+                <h2>Login</h2>
+                <Notification message={message} errorMessage={errorMessage} />
+                <form>
+                  <div>
+                    <label>
+                      Username
+                      <input
+                        type='text'
+                        value={username}
+                        onChange={({ target }) =>
+                          setUsername(target.value)}
+                      />
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      Password
+                      <input
+                        type='password'
+                        value={password}
+                        onChange={({ target }) =>
+                          setPassword(target.value)}
+                      />
+                    </label>
+                  </div>
+                  <Button click={handleLogin} text='Login' />
+                </form>
+              </div>
+      
+      )
+    }
+    */
 
   return (
     <div>
       <h2>Blogs</h2>
       <Notification message={message} errorMessage={errorMessage} />
-      <h4>
-        Your are logged in as {user.name}</h4>
-      <div>
-        <Button click={handleLogout} text='Logout' />
-        <p></p>
-      </div>
 
-      <div>
-        <h3>Create new entry</h3>
-        <form>
+      {!user && loginForm()}
+      {user && (
+        <div>
+          <h4>
+            Your are logged in as {user.name}</h4>
           <div>
-            <label>
-              Title:
-              <input
-                type='text'
-                value={title}
-                onChange={({ target }) =>
-                  setTitle(target.value)}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Author:
-              <input
-                type='text'
-                value={author}
-                onChange={({ target }) =>
-                  setAuthor(target.value)}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Url:
-              <input
-                type='text'
-                value={url}
-                onChange={({ target }) =>
-                  setUrl(target.value)}
-              />
-            </label>
-          </div>
-          <p></p>
-          <Button click={addNewBlog} text='Save' />
-          <p></p>
-        </form>
-      </div>
 
-      {
-        blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} />
-        )
-      }
+            <Button click={handleLogout} text='Logout' />
+            <p></p>
+          </div>
+
+          <div>
+            <h3>Create new entry</h3>
+            <form>
+              <div>
+                <label>
+                  Title:
+                  <input
+                    type='text'
+                    value={title}
+                    onChange={({ target }) =>
+                      setTitle(target.value)}
+                  />
+                </label>
+              </div>
+              <div>
+                <label>
+                  Author:
+                  <input
+                    type='text'
+                    value={author}
+                    onChange={({ target }) =>
+                      setAuthor(target.value)}
+                  />
+                </label>
+              </div>
+              <div>
+                <label>
+                  Url:
+                  <input
+                    type='text'
+                    value={url}
+                    onChange={({ target }) =>
+                      setUrl(target.value)}
+                  />
+                </label>
+              </div>
+              <p></p>
+              <Button click={addNewBlog} text='Save' />
+              <p></p>
+            </form>
+          </div>
+
+          {
+            blogs.map(blog =>
+              <Blog key={blog.id} blog={blog} />
+            )
+          }
+        </div>
+      )}
     </div >
   )
 }
