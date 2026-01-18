@@ -24,7 +24,6 @@ const App = () => {
   const [message, setMessage] = useState('')
   const [loginVisible, setLoginVisible] = useState(false)
 
-
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs(blogs)
@@ -83,6 +82,7 @@ const App = () => {
     try {
       const user = await loginService.login({ username, password })
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
+
 
       blogService.setToken(user.token)
       console.log('Token: ', user.token)
@@ -150,10 +150,9 @@ const App = () => {
             <Button click={handleLogout} text='Logout' />
             <p></p>
           </div>
-
           {
             blogs.map(blog =>
-              <Blog key={blog.id} blog={blog} />
+              <Blog key={blog.id} blog={blog} user={user.name} />
             )
           }
         </div>
