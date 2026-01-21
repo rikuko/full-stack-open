@@ -70,6 +70,19 @@ const App = () => {
       })
   }
 
+  const updateBlog = async (id) => {
+    const blogToLike = blogs.find(b => b.id === id)
+
+    const updatedBlog = {
+      ...blogToLike,
+      likes: blogToLike.likes + 1,
+      user: blogToLike.user.di
+    }
+    const returnedBlog = await blogService.update(id, updatedBlog)
+    setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog)
+    )
+  }
+
   const handleLogout = () => {
     window.localStorage.clear()
     setUser(null)
@@ -82,7 +95,6 @@ const App = () => {
     try {
       const user = await loginService.login({ username, password })
       window.localStorage.setItem('loggedUser', JSON.stringify(user))
-
 
       blogService.setToken(user.token)
       console.log('Token: ', user.token)
@@ -144,15 +156,16 @@ const App = () => {
       {user && (
         <div>
           <h4>
-            Your are logged in as {user.name}</h4>
+            Your are logged in as {user.name}
+          </h4> <Button click={handleLogout} text='Logout' />
           {blogForm()}
-          <div>
-            <Button click={handleLogout} text='Logout' />
-            <p></p>
-          </div>
           {
             blogs.map(blog =>
-              <Blog key={blog.id} blog={blog} user={user.name} />
+              <Blog
+                key={blog.id}
+                blog={blog}
+                updateBlog={() => updateBlog(blog.id)}
+              />
             )
           }
         </div>

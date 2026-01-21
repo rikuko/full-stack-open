@@ -2,14 +2,14 @@ import { useState } from "react"
 
 import Button from "./Button"
 
-const Blog = ({ blog, user }) => {
-  const [blogDataVisible, setBlogDataVisible] = useState(true)
+const Blog = ({ blog, updateBlog }) => {
+  const [blogDataVisible, setBlogDataVisible] = useState(false)
 
   const handleDataVisible = () => {
     setBlogDataVisible(!blogDataVisible)
   }
 
-  if (blogDataVisible) {
+  if (!blogDataVisible) {
     return (
       <div className='blogCont'>
         <div className='blogStyle'>
@@ -26,13 +26,13 @@ const Blog = ({ blog, user }) => {
         <br />
         {blog.url}
         <br />
-        Likes {blog.likes} <Button text='Like' />
+        Likes {blog.likes} <Button click={updateBlog} text='Like' />
         <br />
-        {user}
+        {blog.user.name}
+        <br />
       </div >
     </div>
   )
-
 }
 
 export default Blog
