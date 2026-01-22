@@ -76,7 +76,7 @@ const App = () => {
     const updatedBlog = {
       ...blogToLike,
       likes: blogToLike.likes + 1,
-      user: blogToLike.user.di
+      user: blogToLike.user.id
     }
     const returnedBlog = await blogService.update(id, updatedBlog)
     setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog)
@@ -160,13 +160,15 @@ const App = () => {
           </h4> <Button click={handleLogout} text='Logout' />
           {blogForm()}
           {
-            blogs.map(blog =>
-              <Blog
-                key={blog.id}
-                blog={blog}
-                updateBlog={() => updateBlog(blog.id)}
-              />
-            )
+            [...blogs]
+              .sort((a, b) => b.likes - a.likes)
+              .map(blog =>
+                <Blog
+                  key={blog.id}
+                  blog={blog}
+                  updateBlog={() => updateBlog(blog.id)}
+                />
+              )
           }
         </div>
       )}
