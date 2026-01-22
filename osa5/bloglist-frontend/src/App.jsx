@@ -50,7 +50,11 @@ const App = () => {
     }
 
     blogService.create(newBlog).then(returned => {
-      setBlogs(blogs.concat(returned))
+      const blogWithUser = {
+        ...returned,
+        user: user
+      }
+      setBlogs(blogs.concat(blogWithUser))
       setNewBlog('')
       setTitle('')
       setAuthor('')
@@ -81,6 +85,14 @@ const App = () => {
     const returnedBlog = await blogService.update(id, updatedBlog)
     setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog)
     )
+  }
+
+  const removeBlog = async (blog) => {
+    const ok = window.confirm(`Remove blog ${blog.title}, by ${blog.author}?`)
+
+    if (!ok) return
+    await blogService.remove(blog.id)
+    setBlogs(blogs.filter(b => b.id !== blog.id))
   }
 
   const handleLogout = () => {
@@ -167,6 +179,8 @@ const App = () => {
                   key={blog.id}
                   blog={blog}
                   updateBlog={() => updateBlog(blog.id)}
+                  removeBlog={() => removeBlog(blog)}
+                  user={user}
                 />
               )
           }
