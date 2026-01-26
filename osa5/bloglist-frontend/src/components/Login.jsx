@@ -1,35 +1,35 @@
 const Login = ({
-    handleSubmit,
-    handleUsername,
-    handlePassword,
-    username,
-    password
+  handleSubmit,
+  handleUsername,
+  handlePassword,
+  username,
+  password
 }) => {
-    return (
+  return (
+    <div>
+      <h2>Login</h2>
+      <form onSubmit={handleSubmit}>
         <div>
-            <h2>Login</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    Username
-                    <input
-                        value={username}
-                        onChange={handleUsername}
-                    />
-                </div>
-                <div>
-                    Password
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={handlePassword}
-                    />
-                </div>
-                <div>
-                    <button type="submit">Login</button>
-                </div>
-            </form>
+          Username
+          <input
+            value={username}
+            onChange={handleUsername}
+          />
         </div>
-    )
+        <div>
+          Password
+          <input
+            type='password'
+            value={password}
+            onChange={handlePassword}
+          />
+        </div>
+        <div>
+          <button type='submit'>Login</button>
+        </div>
+      </form>
+    </div>
+  )
 }
 
 export default Login

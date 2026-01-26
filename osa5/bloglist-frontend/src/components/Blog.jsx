@@ -1,9 +1,9 @@
-import { useState } from "react"
+import { useState } from 'react'
 
-import Button from "./Button"
+import Button from './Button'
 
 const Blog = ({ blog, updateBlog, removeBlog, user }) => {
-  const [blogDataVisible, setBlogDataVisible] = useState(false)
+  const [ blogDataVisible, setBlogDataVisible ] = useState(false)
 
   const handleDataVisible = () => {
     setBlogDataVisible(!blogDataVisible)
@@ -34,7 +34,7 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
           <div>
             <Button
               click={removeBlog}
-              text="Remove"
+              text='Remove'
             />
           </div>
         )}

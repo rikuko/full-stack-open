@@ -12,17 +12,15 @@ import loginService from './services/login'
 import './css/main.css'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
-  const [newBlog, setNewBlog] = useState('')
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
-  const [message, setMessage] = useState('')
-  const [loginVisible, setLoginVisible] = useState(false)
+  const [ blogs, setBlogs ] = useState([])
+  const [ username, setUsername ] = useState('')
+  const [ password, setPassword ] = useState('')
+  const [ user, setUser ] = useState(null)
+  const [ title, setTitle ] = useState('')
+  const [ author, setAuthor ] = useState('')
+  const [ url, setUrl ] = useState('')
+  const [ errorMessage, setErrorMessage ] = useState('')
+  const [ message, setMessage ] = useState('')
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -55,7 +53,6 @@ const App = () => {
         user: user
       }
       setBlogs(blogs.concat(blogWithUser))
-      setNewBlog('')
       setTitle('')
       setAuthor('')
       setUrl('')
@@ -98,7 +95,6 @@ const App = () => {
   const handleLogout = () => {
     window.localStorage.clear()
     setUser(null)
-    setLoginVisible(false)
   }
 
   const handleLogin = async event => {
@@ -131,7 +127,7 @@ const App = () => {
 
   const loginForm = () => {
     return (
-      <Reusable buttonLabel="Login">
+      <Reusable buttonLabel='Login'>
         <Login
           username={username}
           password={password}
@@ -172,7 +168,7 @@ const App = () => {
           </h4> <Button click={handleLogout} text='Logout' />
           {blogForm()}
           {
-            [...blogs]
+            [ ...blogs ]
               .sort((a, b) => b.likes - a.likes)
               .map(blog =>
                 <Blog
