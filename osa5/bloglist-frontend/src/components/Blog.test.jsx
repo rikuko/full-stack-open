@@ -27,5 +27,15 @@ test('Renderöi blogin authorin', () => {
   expect(element).toBeDefined()
 })
 
+test('Renderöi blogin URLn', async () => {
+  render(<Blog blog={ blog } />)
+  const user = userEvent.setup()
+  const button = screen.getByText('Show')
+  await user.click(button)
+
+  const element = screen.getByText(/www.testi.fi/i)
+  expect(element).toBeDefined()
+})
+
 
 
