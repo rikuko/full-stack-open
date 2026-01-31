@@ -127,13 +127,13 @@ const App = () => {
 
   const loginForm = () => {
     return (
-      <Reusable buttonLabel='Login'>
+      <Reusable buttonLabel = 'Login'>
         <Login
-          username={ username }
-          password={ password }
-          handleUsername={ ({ target }) => setUsername(target.value) }
-          handlePassword={ ({ target }) => setPassword(target.value) }
-          handleSubmit={ handleLogin }
+          username = { username }
+          password = { password }
+          handleUsername = { ({ target }) => setUsername(target.value) }
+          handlePassword = { ({ target }) => setPassword(target.value) }
+          handleSubmit = { handleLogin }
         />
       </Reusable>
     )
@@ -143,13 +143,13 @@ const App = () => {
     return (
       <div>
         <BlogForm
-          title={ title }
-          author={ author }
-          url={ url }
-          handleTitle={ ({ target }) => setTitle(target.value) }
-          handleAuthor={ ({ target }) => setAuthor(target.value) }
-          handleUrl={ ({ target }) => setUrl(target.value) }
-          handleSubmit={ addNewBlog }
+          title = { title }
+          author = { author }
+          url = { url }
+          handleTitle = { ({ target }) => setTitle(target.value) }
+          handleAuthor = { ({ target }) => setAuthor(target.value) }
+          handleUrl = { ({ target }) => setUrl(target.value) }
+          handleSubmit = { addNewBlog }
         />
       </div>
     )
@@ -158,25 +158,25 @@ const App = () => {
   return (
     <div>
       <h2>Blogs</h2>
-      <Notification message={ message } errorMessage={ errorMessage } />
+      <Notification message = { message } errorMessage = { errorMessage } />
 
       { !user && loginForm() }
       { user && (
         <div>
           <h4>
             Your are logged in as { user.name }
-          </h4> <Button click={ handleLogout } text='Logout' />
+          </h4> <Button click = { handleLogout } text = 'Logout' />
           { blogForm() }
           {
             [ ...blogs ]
               .sort((a, b) => b.likes - a.likes)
               .map(blog =>
                 <Blog
-                  key={ blog.id }
-                  blog={ blog }
-                  updateBlog={ () => updateBlog(blog.id) }
-                  removeBlog={ () => removeBlog(blog) }
-                  user={ user }
+                  key = { blog.id }
+                  blog = { blog }
+                  updateBlog = { () => updateBlog(blog.id) }
+                  removeBlog = { () => removeBlog(blog) }
+                  user = { user }
                 />
               )
           }

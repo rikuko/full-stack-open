@@ -35,12 +35,13 @@ export default [
       'react/jsx-no-target-blank': 'off',
       'react-refresh/only-export-components': [ 'warn', { allowConstantExport: true } ],
       'react/jsx-closing-bracket-location': [ 'error', 'line-aligned' ],
+      'react/jsx-equals-spacing': ["error", "always"],
 
       'indent': [ 'error', 2 ],
       'quotes': [ 'error', 'single' ],
       'jsx-quotes': [ 'error', 'prefer-single' ],
       'react/jsx-curly-spacing': [ 'error', { 'when': 'always', 'children': true } ],
-
+      
       'semi': [ 'error', 'never' ],
       'linebreak-style': [ 'error', 'unix' ],
       'array-bracket-newline': [ 'warn', 'consistent' ],
