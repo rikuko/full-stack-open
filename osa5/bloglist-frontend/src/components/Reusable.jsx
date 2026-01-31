@@ -11,12 +11,12 @@ const Reusable = (props) => {
   }
   return (
     <div>
-      <div style={hide}>
-        <button onClick={changeVisibility}>{props.buttonLabel}</button>
+      <div style={ hide }>
+        <button onClick={ changeVisibility }>{ props.buttonLabel }</button>
       </div>
-      <div style={show}>
-        {props.children}
-        <button onClick={changeVisibility}>Cancel</button>
+      <div style={ show }>
+        { props.children }
+        <button onClick={ changeVisibility }>Cancel</button>
       </div>
     </div>
   )

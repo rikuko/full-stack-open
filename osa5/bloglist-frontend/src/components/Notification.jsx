@@ -3,7 +3,7 @@ const Notification = ({ message, errorMessage }) => {
     return (
       <div>
         <div className='error'>
-          {errorMessage}
+          { errorMessage }
         </div>
       </div>
     )
@@ -11,7 +11,7 @@ const Notification = ({ message, errorMessage }) => {
     return (
       <div>
         <div className='message'>
-          {message}
+          { message }
         </div>
       </div>
     )

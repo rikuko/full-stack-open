@@ -13,7 +13,7 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
     return (
       <div className='blogCont'>
         <div className='blogStyle'>
-          {blog.title}, {blog.author} <button onClick={handleDataVisible}>Show</button>
+          { blog.title }, { blog.author } <button onClick={ handleDataVisible }>Show</button>
         </div >
       </div>
     )
@@ -22,22 +22,22 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
   return (
     <div className='blogCont'>
       <div className='blogStyle'>
-        {blog.title}, {blog.author} <button onClick={handleDataVisible}>Hide</button>
+        { blog.title }, { blog.author } <button onClick={ handleDataVisible }>Hide</button>
         <br />
-        {blog.url}
+        { blog.url }
         <br />
-        Likes {blog.likes} <Button click={updateBlog} text='Like' />
+        Likes { blog.likes } <Button click={ updateBlog } text='Like' />
         <br />
-        {blog.user.name}
+        { blog.user.name }
 
-        {user && blog.user.username === user.username && (
+        { user && blog.user.username === user.username && (
           <div>
             <Button
-              click={removeBlog}
+              click={ removeBlog }
               text='Remove'
             />
           </div>
-        )}
+        ) }
 
       </div >
     </div>

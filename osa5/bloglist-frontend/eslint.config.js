@@ -39,6 +39,7 @@ export default [
       'indent': [ 'error', 2 ],
       'quotes': [ 'error', 'single' ],
       'jsx-quotes': [ 'error', 'prefer-single' ],
+      'react/jsx-curly-spacing': [ 'error', { 'when': 'always', 'children': true } ],
 
       'semi': [ 'error', 'never' ],
       'linebreak-style': [ 'error', 'unix' ],
@@ -56,6 +57,7 @@ export default [
       'lines-around-comment': [ 'error', { 'beforeBlockComment': true, 'beforeLineComment': true } ],
       'multiline-comment-style': [ 'error', 'starred-block' ],
 
+      'no-extra-semi': 'error',
       'no-unused-vars': [ 'error', { varsIgnorePattern: '^[A-Z_]' } ],
       'no-trailing-spaces': 'error',
       'no-console': 'off',
@@ -63,5 +65,21 @@ export default [
       'react/prop-types': [ 'off', { ignore: [] } ],
       eqeqeq: 'error'
     }
+  },
+  {
+    files: [ '**/*.test.{js,jsx}' ],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: {
+        ...globals.browser,
+        ...globals.vitest
+      },
+      parserOptions: {
+        ecmaVersion: 'latest',
+        ecmaFeatures: { jsx: true },
+        sourceType: 'module'
+      }
+    }
   }
 ]
+

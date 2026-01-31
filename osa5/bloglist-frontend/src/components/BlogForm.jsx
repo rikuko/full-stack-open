@@ -10,29 +10,29 @@ const BlogForm = ({
   return (
     <div>
       <h3>Create new entry</h3>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={ handleSubmit }>
         <div>
           Title:
           <input
             type='text'
-            value={title}
-            onChange={handleTitle}
+            value={ title }
+            onChange={ handleTitle }
           />
         </div>
         <div>
           Author:
           <input
             type='text'
-            value={author}
-            onChange={handleAuthor}
+            value={ author }
+            onChange={ handleAuthor }
           />
         </div>
         <div>
           Url:
           <input
             type='text'
-            value={url}
-            onChange={handleUrl}
+            value={ url }
+            onChange={ handleUrl }
           />
         </div>
         <p></p>

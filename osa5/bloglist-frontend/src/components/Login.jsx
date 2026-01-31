@@ -8,20 +8,20 @@ const Login = ({
   return (
     <div>
       <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={ handleSubmit }>
         <div>
           Username
           <input
-            value={username}
-            onChange={handleUsername}
+            value={ username }
+            onChange={ handleUsername }
           />
         </div>
         <div>
           Password
           <input
             type='password'
-            value={password}
-            onChange={handlePassword}
+            value={ password }
+            onChange={ handlePassword }
           />
         </div>
         <div>
