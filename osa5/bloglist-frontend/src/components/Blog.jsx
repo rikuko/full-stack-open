@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Button from './Button'
 
 const Blog = ({ blog, updateBlog, removeBlog, user }) => {
-  const [blogDataVisible, setBlogDataVisible] = useState(false)
+  const [ blogDataVisible, setBlogDataVisible ] = useState(false)
 
   const handleDataVisible = () => {
     setBlogDataVisible(!blogDataVisible)
@@ -11,33 +11,33 @@ const Blog = ({ blog, updateBlog, removeBlog, user }) => {
 
   if (!blogDataVisible) {
     return (
-      <div className='blogCont'>
-        <div className='blogStyle'>
-          {blog.title}, {blog.author} <button onClick={handleDataVisible}>Show</button>
+      <div className = 'blogCont'>
+        <div className = 'blogStyle'>
+          { blog.title }, { blog.author } <button onClick = { handleDataVisible }>Show</button>
         </div >
       </div>
     )
   }
 
   return (
-    <div className='blogCont'>
-      <div className='blogStyle'>
-        {blog.title}, {blog.author} <button onClick={handleDataVisible}>Hide</button>
+    <div className = 'blogCont'>
+      <div className = 'blogStyle'>
+        { blog.title }, { blog.author } <button onClick = { handleDataVisible }>Hide</button>
         <br />
-        {blog.url}
+        { blog.url }
         <br />
-        Likes {blog.likes} <Button click={updateBlog} text='Like' />
+        Likes { blog.likes } <Button click = { updateBlog } text = 'Like' />
         <br />
-        {blog.user.name}
+        { blog.user.name }
 
-        {user && blog.user.username === user.username && (
+        { user && blog.user.username === user.username && (
           <div>
             <Button
-              click={removeBlog}
-              text='Remove'
+              click = { removeBlog }
+              text = 'Remove'
             />
           </div>
-        )}
+        ) }
 
       </div >
     </div>

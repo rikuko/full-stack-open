@@ -45,4 +45,5 @@ describe('Bloglist app tests', () => {
             await expect(blogCont.getByRole('button', { name: 'Show' })).toBeVisible()
         })
     })
+    //! Jatka tehtävästä 5.20
 })

@@ -2,7 +2,7 @@ const Notification = ({ message, errorMessage }) => {
   if (errorMessage) {
     return (
       <div>
-        <div className='error'>
+        <div className = 'error'>
           { errorMessage }
         </div>
       </div>
@@ -10,7 +10,7 @@ const Notification = ({ message, errorMessage }) => {
   } if (message) {
     return (
       <div>
-        <div className='message'>
+        <div className = 'message'>
           { message }
         </div>
       </div>
