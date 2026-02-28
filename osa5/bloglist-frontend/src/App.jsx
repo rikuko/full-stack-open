@@ -85,7 +85,7 @@ const App = () => {
   }
 
   const removeBlog = async (blog) => {
-    const ok = window.confirm(`Remove blog ${blog.title}, by ${blog.author}?`)
+    const ok = window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)
 
     if (!ok) return
     await blogService.remove(blog.id)
