@@ -43,17 +43,17 @@ describe('Bloglist app tests', () => {
     })
 
     describe('Processing blogs', () => {
-        test('Logged user can add new blog', async ({ page }) => {
+        beforeEach(async ({ page }) => {
             await loginWith(page, 'rkos', 'salainen')
             await addNewBlog(page, 'Test blog', 'Pete Blogger', 'www.google.com')
+        })
+        test('Logged user can add new blog', async ({ page }) => {
             const blogCont = page.locator('.blogCont')
             await expect(blogCont.getByRole('button', { name: 'Show' })).toBeVisible()
             await expect(blogCont).toContainText('Test blog')
         })
 
         test('Blogs can be liked', async ({ page }) => {
-            await loginWith(page, 'rkos', 'salainen')
-            await addNewBlog(page, 'Test blog', 'Pete Blogger', 'www.google.com')
             const blogCont = page.locator('.blogCont')
             await blogCont.getByRole('button', { name: 'Show' }).click()
             await expect(blogCont).toContainText('Likes 0')
@@ -62,8 +62,6 @@ describe('Bloglist app tests', () => {
         })
 
         test('The user who added the blog can delete the blog', async ({ page }) => {
-            await loginWith(page, 'rkos', 'salainen')
-            await addNewBlog(page, 'Test blog', 'Pete Blogger', 'www.google.com')
             const blogCont = page.locator('.blogCont')
             await blogCont.getByRole('button', { name: 'Show' }).click()
 
@@ -81,6 +79,14 @@ describe('Bloglist app tests', () => {
             await expect(blog.getByText('Test blog')).not.toBeVisible()
         })
 
+        test('Only the user who added the blog can delete it', async ({ page }) => {
+            await page.getByRole('button', { name: 'Logout' }).click()
+            await loginWith(page, 'paivi', 'salainen')
+
+            const blogCont = page.locator('.blogCont')
+            await blogCont.getByRole('button', { name: 'Show' }).click()
+            await expect(blogCont.getByRole('button', { name: 'Remove' })).not.toBeVisible()
+        })
     })
 })
 

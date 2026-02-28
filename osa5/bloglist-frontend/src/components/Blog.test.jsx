@@ -5,7 +5,7 @@ import { expect } from 'vitest'
 
 const user = {
   username: 'testuser',
-  name:'Test User'
+  name: 'Test User'
 }
 
 const blog = {
@@ -42,7 +42,7 @@ test('Lisää kutsuu tapahtumakäsittelijää kahdesti kun like-nappia painetaan
 
   const mockUpdate = vi.fn()
 
-  render(<Blog blog = { blog } updateBlog = { mockUpdate }/>)
+  render(<Blog blog = { blog } updateBlog = { mockUpdate } />)
 
   const user = userEvent.setup()
   const showButton = screen.getByText('Show')
