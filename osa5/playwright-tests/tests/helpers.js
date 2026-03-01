@@ -10,6 +10,8 @@ const addNewBlog = async (page, title, author, url) => {
     await page.getByPlaceholder('author').fill(author)
     await page.getByPlaceholder('url').fill(url)
     await page.getByRole('button', { name: 'Save' }).click()
+
+    await page.getByText(`${title}, ${author}`).waitFor()
 }
 
 export {
