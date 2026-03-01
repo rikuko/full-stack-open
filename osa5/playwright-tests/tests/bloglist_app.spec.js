@@ -88,5 +88,62 @@ describe('Bloglist app tests', () => {
             await expect(blogCont.getByRole('button', { name: 'Remove' })).not.toBeVisible()
         })
     })
+
+    describe('Blog list order', () => {
+        test.only('Blogs are arranged in descending order of likes', async ({ page }) => {
+            await loginWith(page, 'rkos', 'salainen')
+
+            await addNewBlog(page, 'Test blog', 'Pete Blogger', 'www.google.com')
+            await addNewBlog(page, 'Second test blog', 'Pete Blogger', 'www.google.com')
+            await addNewBlog(page, 'Third test blog', 'Pete Blogger', 'www.google.com')
+
+            const blogByTitle = (title) =>
+                page.locator('.blogCont').filter({
+                    has: page.getByText(new RegExp(`^${title},`))
+                })
+
+            const openIfClosed = async (blog) => {
+                const showBtn = blog.getByRole('button', { name: 'Show' })
+                if (await showBtn.count()) {
+                    await showBtn.click()
+                }
+            }
+
+            const testBlog = blogByTitle('Test blog')
+            const secondTestBlog = blogByTitle('Second test blog')
+            const thirdTestBlog = blogByTitle('Third test blog')
+
+            // 1 like
+            await openIfClosed(testBlog)
+            await testBlog.getByRole('button', { name: 'Like' }).click()
+            await openIfClosed(secondTestBlog)
+            await secondTestBlog.getByRole('button', { name: 'Like' }).click()
+            await openIfClosed(thirdTestBlog)
+            await thirdTestBlog.getByRole('button', { name: 'Like' }).click()
+
+            // 2 likes
+            await openIfClosed(secondTestBlog)
+            await secondTestBlog.getByRole('button', { name: 'Like' }).click()
+            await openIfClosed(thirdTestBlog)
+            await thirdTestBlog.getByRole('button', { name: 'Like' }).click()
+
+            // 3 likes
+            await openIfClosed(thirdTestBlog)
+            await thirdTestBlog.getByRole('button', { name: 'Like' }).click()
+
+
+            // Tarkista järjestys
+            const likeTexts = await page
+                .locator('.blogCont')
+                .locator('text=Likes')
+                .allTextContents()
+
+            const likes = likeTexts.map(t =>
+                Number(t.replace('Likes ', '').trim())
+            )
+
+            expect(likes).toEqual([...likes].sort((a, b) => b - a))
+        })
+    })
 })
 
