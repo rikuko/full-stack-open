@@ -34,7 +34,6 @@ const reducer = (state = initialState, action) => {
         id: id,
         votes: anecdoteToVote.votes + 1
       }
-     
       return state.map(anecdote => (anecdote.id !== id ? anecdote : votedAnecdote))
     }
 
