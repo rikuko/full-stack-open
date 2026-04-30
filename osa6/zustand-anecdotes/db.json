@@ -1,5 +1,5 @@
 {
-  "anecdotes":[
+  "anecdotes": [
     {
       "content": "If it hurts, do it more often",
       "id": "47145",
@@ -30,5 +30,6 @@
       "id": "98312",
       "votes": 0
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

@@ -1,16 +1,18 @@
 import { useAnecdoteActions } from '../store'
+import anecdoteService from '../services/anecdotes'
 
 const AnecdoteForm = () => {
   const {  addAnecdote } = useAnecdoteActions()
 
-  const newAnecdote = (e) => {
+  const newAnecdote = async (e) => {
     e.preventDefault()
     const content = e.target.newAnecdote.value
     e.target.reset()
-    console.log('Content ', content)
 
-    if (content)
-      return addAnecdote(content)
+    if (content){
+      const newContent = await anecdoteService.create(content)
+      return addAnecdote(newContent)
+    }
   }
 
   return (

@@ -6,7 +6,7 @@ const AnecdoteList = () => {
 
   const filteredAnecdotes = anecdotes
     .filter(a => a.content.toLowerCase().includes(filter.toLowerCase()))
-    .toSorted((a, b) => b.votes - a.votes)
+    .sort((a, b) => b.votes - a.votes)
 
   const { voteAnecdote }  = useAnecdoteActions()
 

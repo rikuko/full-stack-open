@@ -1,16 +1,5 @@
 import { create } from 'zustand'
 
-import anecdoteService from './services/anecdotes'
-
-
-const getId = () => (100000 * Math.random()).toFixed(0)
-
-const asObject = anecdote => ({
-  content: anecdote,
-  id: getId(),
-  votes: 0
-})
-
 const useAnecdoteStore = create(set => ({
   anecdotes: [],
   filter: '',
@@ -21,7 +10,7 @@ const useAnecdoteStore = create(set => ({
       })
     ),
     addAnecdote: content => set(
-      state => ({ anecdotes: [ ...state.anecdotes, asObject(content) ] })
+      state => ({ anecdotes: [ ...state.anecdotes, content ] })
     ),
     setFilter: value => set(() => ({ filter: value })),
     initialize: anecdotes => set(() => ({ anecdotes }))
